@@ -9,6 +9,8 @@
 </head>
 
 <body>
+	Last Update Time: <span id="time"></span>
+	<hr>
 	<div id="content"></div>
 </body>
 
@@ -21,9 +23,11 @@
 
 	socket.addEventListener("message", function (event) {
 		console.log("Message from server");
-		const content = event.data;
+		const content = JSON.parse(event.data);
+		const time = new Date(content.time.secs_since_epoch * 1000);
+		document.getElementById("time").innerText = time.toLocaleString("zh-CN");
 		var div = document.getElementById("content");
-		div.innerText += content;
+		div.innerText += content.text;
 		div.innerText += "\n";
 	});
 </script>
